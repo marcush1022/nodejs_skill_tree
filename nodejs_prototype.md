@@ -1,6 +1,6 @@
-## **PROTOTYPE**
+# **PROTOTYPE**
 
-JS的继承通过PROTOTYPE对象(原型对象);
+> **JS的继承通过PROTOTYPE对象(原型对象)**;
 
 ### **构造函数的缺点**
 ```

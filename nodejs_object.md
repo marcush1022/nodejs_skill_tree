@@ -1,4 +1,4 @@
-## **JS OBJECT**
+# **JS OBJECT**
 
 ### **1. object本身的方法**
 直接定义在object对象的方法;
