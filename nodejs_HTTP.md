@@ -1,6 +1,8 @@
-#HTTP
-nodejs的核心模块，主要用于搭建HTTP服务；
-例: 
+# **HTTP**
+> **nodejs的核心模块，主要用于搭建HTTP服务**
+
+例:
+``` 
 var http = require('http');
 var fs = require('fs')
 
@@ -36,12 +38,13 @@ http.createServer(function(req, res) {
 }).listen(3000);
 
 console.log('Http server listenig at port 3000');
+```
 
-createServer的参数request, 属性为: 
-url: 发出请求的网址;
-method: 请求的方法;
-headers: HTTP请求的HTTP头信息;
-request.setEncoding(): 设置请求的编码；
-request.addListener(): 为request添加事件的回调函数;
+**createServer的参数request, 属性为**:   
+**url**: 发出请求的网址;  
+**method**: 请求的方法;  
+**headers**: HTTP请求的HTTP头信息;  
+**request.setEncoding()**: 设置请求的编码;  
+**request.addListener()**: 为request添加事件的回调函数;  
 
 
