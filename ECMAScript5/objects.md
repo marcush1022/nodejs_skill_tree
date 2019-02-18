@@ -96,7 +96,7 @@ encodeURIComponent 函数计算出一个新版 URI, 将 URI 中某些字符的�
 **When Object is called as part of a new expression, it is a constructor that may create an object.**
 **当 Object 是 new 表达式调用的一部分时, 它是一个构造器, 可创建一个对象.**
 
-new Object ([ value ])  
+**new Object ([ value ])**  
 当以一个参数 value 或者无参数调用 Object 构造器, 采用如下步骤:
 
 1. 如果提供了 value, 则:  
@@ -158,18 +158,82 @@ iii. 令 desc 为以 Attributes 作为参数调用 ToPropertyDescriptor 的结�
 iv. 以 name, desc, true 作为参数调用 O 的 [[DefineOwnProperty]] 内部方法;  
 v. 返回 O;  
 
-- **Object.defineProperties(O, Properties)**
+- **Object.defineProperties(O, Properties)**  
+defineProperties 函数用于给一个对象添加一些自身属性 并/或 更新现有的一些自身属性的特性;  
 
-- **Object.seal(O)**
+- **Object.seal(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;  
+ii. 对 O 的每个命名自身属性名 P,  
+  a. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果;  
+  b. 如果 desc.[[Configurable]] 是 true, 设定 desc.[[Configurable]] 为 false;  
+  c. 以 P, desc, true 为参数调用 O 的 [[DefineOwnProperty]] 内部方法;  
+iii. 设定 O 的 [[Extensible]] 内部属性为 false;  
+iv. 返回 O;  
 
-- **Object.freeze(O)**
+- **Object.freeze(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;  
+ii. 对 O 的每个命名自身属性名 P,  
+  a. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果;  
+  b. 如果 IsDataDescriptor(desc) 是 true, 
+     则如果 desc.[[Writable]] 是 true, 设定 desc.[[Writable]] 为 false;  
+  c. 如果 desc.[[Configurable]] 是 true, 设定 desc.[[Configurable]] 为 false;  
+  d. 以 P, desc, true 作为参数调用 O 的 [[DefineOwnProperty]] 内部方法;  
+iii. 设定 O 的 [[Extensible]] 内部属性为 false;  
+iv. 返回 O;  
 
-- **Object.preventExtensions(O)**
+- **Object.preventExtensions(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;  
+ii. 设定 O 的 [[Extensible]] 内部属性为 false;  
+iii. 返回 O;
 
-- **Object.isSealed(O)**
+- **Object.isSealed(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;  
+ii. 对 O 的每个命名自身属性名 P,  
+  a. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果;  
+  b. 如果 desc.[[Configurable]] 是 true, 则返回 false;  
+iii. 如果 O 的 [[Extensible]] 内部属性是 false, 则返回 true;  
+iv. 否则 , 返回 false;  
 
-- **Object.isFrozen(O)**
+- **Object.isFrozen(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;  
+ii. 对 O 的每个命名自身属性名 P, 
+  a. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果;  
+  b. 如果 IsDataDescriptor(desc) 是 true，则如果 desc.[[Writable]] 是 true, 则返回 false;  
+  c. 如果 desc.[[Configurable]] 是 true, 则返回 false;  
+iii. 如果 O 的 [[Extensible]] 内部属性是 false, 则返回 true;  
+iv. 否则 , 返回 false;  
 
-- **Object.isExtensible(O)**
+- **Object.isExtensible(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;  
+ii. 返回 O 的 [[Extensible]] 内部属性布尔值;  
 
-- **Object.keys(O)**
+- **Object.keys(O)**  
+i. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常;
+ii. 令 n 为 O 的可遍历自身属性的个数;  
+iii. 令 array 为类似是用表达式 new Array () 创建新对象的结果，这里的 Array 是标准内置构造器名;  
+iv. 令 index 为 0;  
+v. 对 O 的每个可遍历自身属性名 P, 
+  a. 以 ToString(index)，属性描述 {[[Value]]: P, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]: true}，和 false 作为参数调用 array 的 [[DefineOwnProperty]] 内部方法;  
+  b. index 递增 1;  
+vi. 返回 array;  
+
+### **IV. Properties of the Object Prototype Object(Object 的 prototype 对象的属性)**
+
+**The value of the [[Prototype]] internal property of the Object prototype object is null, the value of the [[Class]] internal property is "Object", and the initial value of the [[Extensible]] internal property is true.**  
+**Object 的 prototype 对象的 [[Prototype]] 内部属性的值是 null，[[Class]] 内部属性的值是 "Object"，[[Extensible]] 内部属性的初始值是 true.**  
+
+- **Object.prototype.constructor**  
+Object.prototype.constructor 的初始值是标准内置的 Object 构造器;  
+
+- **Object.prototype.toString()**  
+i. 如果 this 的值是 undefined, 返回 "[object Undefined];  
+ii. 如果 this 的值是 null, 返回 "[object Null]";  
+iii. 令 O 为以 this 作为参数调用 ToObject 的结果;  
+iv. 令 class 为 O 的 [[Class]] 内部属性的值;  
+v. 返回三个字符串 "[object ", class, and "]" 连起来的字符串;  
+
+- **Object.prototype.toLocaleString()**  
+i. 令 O 为以 this 作为参数调用 ToObject 的结果;  
+ii. 令 toString 为以 "toString" 作为参数调用 O 的 [[Get]] 内部方法的结果;  
+iii. 如果 IsCallable(toString) 是 false, 抛出一个 TypeError 异常;  
+iv. 返回以 O 作为 this 值，无参数调用 toString 的 [[Call]] 内部方法的结果;  
