@@ -237,3 +237,11 @@ i. 令 O 为以 this 作为参数调用 ToObject 的结果;
 ii. 令 toString 为以 "toString" 作为参数调用 O 的 [[Get]] 内部方法的结果;  
 iii. 如果 IsCallable(toString) 是 false, 抛出一个 TypeError 异常;  
 iv. 返回以 O 作为 this 值，无参数调用 toString 的 [[Call]] 内部方法的结果;  
+
+- **Object.prototype.valueOf()**
+
+- **Object.prototype.hasOwnProperty(V)**
+
+- **Object.prototype.isPrototypeOf(V)**
+
+- **Object.prototype.propertyIsEnumerable(V)**
